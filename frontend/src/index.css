@@ -31,6 +31,10 @@ body {
   color: var(--gray-text);
 }
 
+.color-primary {
+  color: var(--color-primary);
+}
+
 button {
   cursor: pointer;
   background-color: var(--color-primary);

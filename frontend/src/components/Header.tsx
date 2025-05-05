@@ -9,7 +9,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import WorkIcon from '@mui/icons-material/Work';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -18,6 +19,7 @@ const Header = () => {
     const [isMenu, setMenuClicked] = useState(false)
     const [isProfileClicked, setProfileClicked] = useState(false)
     const [isLgScreenProfile, setLgScreenProfile] = useState(false)
+    const navigate = useNavigate()
 
     //hanele Menu clicked
     function HandleMenuClicked() {
@@ -35,8 +37,8 @@ const Header = () => {
     //lg-screen profile dropwdown
     function HandleLgProfileClicked() {
         setLgScreenProfile(!isLgScreenProfile)
-    }
 
+    }
 
 
     return (
@@ -48,32 +50,32 @@ const Header = () => {
                 </div>
                 <nav className="flex items-center md:mr-10 gap-4 mr-3 relative">
                     <div className='md:flex hidden items-center  gap-4'>
-                        <p className='cursor-pointer'>Home</p>
-                        <p>Dashboard</p>
+                        <Link to={'/'} className='cursor-pointer'>Home</Link>
+                        <p className='cursor-pointer' onClick={() => navigate('/dashboard')}>Dashboard</p>
 
                         {/* //lg screen profile */}
                         <p onClick={HandleLgProfileClicked} className='cursor-pointer '>Profile<ArrowDropDownIcon className={`${isLgScreenProfile ? "rotate-180 " : ""} transition-all duration-500`} /></p>
 
-                        <div className={`${isLgScreenProfile ? " h-76 p-2" : "h-0 p-0 "} absolute overflow-hidden bg-[#2c2c2c] transition-all duration-500 left-0 top-12 w-full  justify-center flex flex-col gap-4 -z-1`}>
-                            <div className='hover:bg-[#4A4A4A] rounded-md p-2 cursor-pointer'>
+                        <div className={`${isLgScreenProfile ? " h-76 p-2" : "h-0 p-0 "} absolute rounded-md overflow-hidden bg-[#2c2c2c] transition-all duration-500 left-0 top-12 w-full  justify-center flex flex-col gap-4 z-44`}>
+                            <div onClick={() => navigate('/profile')} className='hover:bg-[#4A4A4A] rounded-md p-2 cursor-pointer'>
                                 <p className=''>Profile</p>
                                 <p className='gray-text text-xs '>View <span>bens</span> profile</p>
                             </div>
-                            <div className='hover:bg-[#4A4A4A] rounded-md p-2 cursor-pointer'>
+                            <div onClick={() => navigate('/notifications')} className='hover:bg-[#4A4A4A] rounded-md p-2 cursor-pointer'>
                                 <p className=''>Notifications</p>
                                 <p className='gray-text text-xs '>See your Notifications</p>
                             </div>
-                            <div className='hover:bg-[#4A4A4A] rounded-md p-2 cursor-pointer'>
+                            <div onClick={() => navigate('/myjobs')} className='hover:bg-[#4A4A4A] rounded-md p-2 cursor-pointer'>
                                 <p className=''>My Jobs</p>
                                 <p className='gray-text text-xs '>See your saved jobs here</p>
                             </div>
-                            <span className='bg-red-800 w-11/12 text-xs mt-4  h-7 flex items-center justify-center  rounded-md text-center font-bold cursor-pointer'><LogoutIcon style={{ fontSize: 22 }} />LogOut</span>
+                            <span className='bg-red-800 w-11/12 text-xs mt-4  h-7 flex items-center m-auto justify-center  rounded-md text-center font-bold cursor-pointer'><LogoutIcon style={{ fontSize: 22 }} />LogOut</span>
                         </div>
 
 
 
                     </div>
-                    <button className=' w-22 h-10 rounded-md'>Login</button>
+                    <button onClick={() => navigate('/signin')} className=' w-22 h-10 rounded-md'>Login</button>
 
                     {/* //small screen Profile */}
                     <div className='relative md:hidden'>
@@ -86,9 +88,9 @@ const Header = () => {
                             </div>
                             <hr className='border-gray-500 border-t-1 border-0 my-2' />
                             <div className='text-sm'>
-                                <p className='flex gap-2 items-center cursor-pointer h-8 hover:bg-[#4A4A4A] rounded-md'><Person2Icon style={{ fontSize: 22 }} />Profile</p>
-                                <p className='flex gap-2 items-center cursor-pointer h-8 hover:bg-[#4A4A4A] rounded-md '><NotificationsIcon style={{ fontSize: 22 }} />Notifications</p>
-                                <p className='flex gap-2 items-center cursor-pointer h-8 hover:bg-[#4A4A4A] rounded-md '><WorkIcon style={{ fontSize: 22 }} />My Jobs</p>
+                                <Link to={'/profile'} className='flex gap-2 items-center cursor-pointer h-8 hover:bg-[#4A4A4A] rounded-md'><Person2Icon style={{ fontSize: 22 }} />Profile</Link>
+                                <Link to={'/notifications'} className='flex gap-2 items-center cursor-pointer h-8 hover:bg-[#4A4A4A] rounded-md '><NotificationsIcon style={{ fontSize: 22 }} />Notifications</Link>
+                                <Link to={'/myjobs'} className='flex gap-2 items-center cursor-pointer h-8 hover:bg-[#4A4A4A] rounded-md '><WorkIcon style={{ fontSize: 22 }} />My Jobs</Link>
                             </div>
                             <hr className='border-gray-500 border-t-1 border-0 my-2' />
                             <span className='bg-red-800 w-11/12 text-xs mt-4  h-7 flex items-center justify-center  rounded-md text-center font-bold cursor-pointer'><LogoutIcon style={{ fontSize: 22 }} />LogOut</span>
@@ -105,11 +107,11 @@ const Header = () => {
                             <span className={`border-t-2 block w-8/12 mx-auto transition-all duration-500  ${isMenu ? "-rotate-45 -translate-y-[1.5px]" : ""}`}></span>
                         </div>
                         {/* //dropdown */}
-                        <nav className={`${isMenu ? " h-44 p-4 card  " : "h-0 p-0 overflow-hidden"} absolute w-50 right-4 top-20  flex flex-col gap-2  text-sm rounded-lg `}>
-                            <p className=' hover:bg-[#4A4A4A] rounded-md cursor-pointer py-1'><HomeFilledIcon className='mx-2' />Home</p>
-                            <p className=' hover:bg-[#4A4A4A] rounded-md cursor-pointer py-1'><PersonIcon className='mx-2' />Log In</p>
-                            <p className=' hover:bg-[#4A4A4A] rounded-md cursor-pointer py-1'> <PersonAddAltIcon className='mx-2' />Signup</p>
-                            <p className=' hover:bg-[#4A4A4A] rounded-md cursor-pointer py-1'> <DashboardIcon className='mx-2' />Dashboard</p>
+                        <nav className={`${isMenu ? " h-44 p-4 card  " : "h-0 p-0 overflow-hidden"} absolute w-50 right-4 top-12  flex flex-col gap-2  text-sm rounded-lg `}>
+                            <Link to={'/'} className=' hover:bg-[#4A4A4A] rounded-md cursor-pointer py-1'><HomeFilledIcon className='mx-2' />Home</Link>
+                            <Link to={'/signin'} className=' hover:bg-[#4A4A4A] rounded-md cursor-pointer py-1'><PersonIcon className='mx-2' />Log In</Link>
+                            <Link to={'/signup'} className=' hover:bg-[#4A4A4A] rounded-md cursor-pointer py-1'> <PersonAddAltIcon className='mx-2' />Signup</Link>
+                            <Link to={'/dashboard'} className=' hover:bg-[#4A4A4A] rounded-md cursor-pointer py-1'> <DashboardIcon className='mx-2' />Dashboard</Link>
 
                         </nav>
                     </div>
