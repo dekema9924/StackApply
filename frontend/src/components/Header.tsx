@@ -11,6 +11,10 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../Store/Store';
+import { UseDispatch } from 'react-redux';
+import { logOff } from '../features/UserSlice';
 
 
 
@@ -20,6 +24,8 @@ const Header = () => {
     const [isProfileClicked, setProfileClicked] = useState(false)
     const [isLgScreenProfile, setLgScreenProfile] = useState(false)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const user = useSelector((state: RootState) => state.user.value)
 
     //hanele Menu clicked
     function HandleMenuClicked() {
@@ -51,15 +57,17 @@ const Header = () => {
                 <nav className="flex items-center md:mr-10 gap-4 mr-3 relative">
                     <div className='md:flex hidden items-center  gap-4'>
                         <Link to={'/'} className='cursor-pointer'>Home</Link>
-                        <p className='cursor-pointer' onClick={() => navigate('/dashboard')}>Dashboard</p>
+                        {user.isAuth ? <p className='cursor-pointer' onClick={() => navigate('/dashboard')}>Dashboard</p> : ""}
 
                         {/* //lg screen profile */}
-                        <p onClick={HandleLgProfileClicked} className='cursor-pointer '>Profile<ArrowDropDownIcon className={`${isLgScreenProfile ? "rotate-180 " : ""} transition-all duration-500`} /></p>
+                        {
+                            user.isAuth ? <p onClick={HandleLgProfileClicked} className='cursor-pointer '>Profile<ArrowDropDownIcon className={`${isLgScreenProfile ? "rotate-180 " : ""} transition-all duration-500`} /></p> : ""
+                        }
 
-                        <div className={`${isLgScreenProfile ? " h-76 p-2" : "h-0 p-0 "} absolute rounded-md overflow-hidden bg-[#2c2c2c] transition-all duration-500 left-0 top-12 w-full  justify-center flex flex-col gap-4 z-44`}>
+                        <div className={`${isLgScreenProfile ? " h-76 p-2" : "h-0 p-0 "} absolute rounded-md overflow-hidden bg-[#2c2c2c] ${!user.isAuth ? "hidden" : ""} transition-all duration-500 left-0 top-12 w-full  justify-center flex flex-col gap-4 z-44`}>
                             <div onClick={() => navigate('/profile')} className='hover:bg-[#4A4A4A] rounded-md p-2 cursor-pointer'>
                                 <p className=''>Profile</p>
-                                <p className='gray-text text-xs '>View <span>bens</span> profile</p>
+                                <p className='gray-text text-xs '>View <span>{user.username}</span>s profile</p>
                             </div>
                             <div onClick={() => navigate('/notifications')} className='hover:bg-[#4A4A4A] rounded-md p-2 cursor-pointer'>
                                 <p className=''>Notifications</p>
@@ -69,22 +77,30 @@ const Header = () => {
                                 <p className=''>My Jobs</p>
                                 <p className='gray-text text-xs '>See your saved jobs here</p>
                             </div>
-                            <span className='bg-red-800 w-11/12 text-xs mt-4  h-7 flex items-center m-auto justify-center  rounded-md text-center font-bold cursor-pointer'><LogoutIcon style={{ fontSize: 22 }} />LogOut</span>
+                            <span onClick={() => dispatch(logOff())} className='bg-red-800 w-11/12 text-xs mt-4  h-7 flex items-center m-auto justify-center  rounded-md text-center font-bold cursor-pointer'><LogoutIcon style={{ fontSize: 22 }} />LogOut</span>
                         </div>
 
 
 
                     </div>
-                    <button onClick={() => navigate('/signin')} className=' w-22 h-10 rounded-md'>Login</button>
+                    {
+                        !user.isAuth ?
+                            <div className='flex gap-4 items-center '>
+                                <Link className='underline' to={'/signUp'}>SignUp</Link>
+                                <button onClick={() => navigate('/signin')} className=' w-22 h-10 rounded-md'>Login</button>
+                            </div>
+
+                            : ""
+                    }
 
                     {/* //small screen Profile */}
-                    <div className='relative md:hidden'>
+                    <div className={`relative md:hidden ${!user.isAuth ? "hidden" : ""}`}>
                         <span onClick={HandleProfileClicked} className='card border-2 font-bold rounded-full w-10 h-10 text-center flex items-center justify-center cursor-pointer uppercase'>D</span>
                         {/* //profile dropdown */}
                         <nav className={` w-60 absolute right-0 top-[45px] rounded-md ${isProfileClicked ? "card h-fit p-4" : "h-0 overflow-hidden p-0"}`}>
                             <div className='my-2 '>
-                                <p>Ben</p>
-                                <p className='text-xs text-[#A1A1A1]'>ben@gmail.com</p>
+                                <p>{user.username}</p>
+                                <p className='text-xs text-[#A1A1A1]'>{user.email}</p>
                             </div>
                             <hr className='border-gray-500 border-t-1 border-0 my-2' />
                             <div className='text-sm'>
@@ -93,7 +109,7 @@ const Header = () => {
                                 <Link to={'/myjobs'} className='flex gap-2 items-center cursor-pointer h-8 hover:bg-[#4A4A4A] rounded-md '><WorkIcon style={{ fontSize: 22 }} />My Jobs</Link>
                             </div>
                             <hr className='border-gray-500 border-t-1 border-0 my-2' />
-                            <span className='bg-red-800 w-11/12 text-xs mt-4  h-7 flex items-center justify-center  rounded-md text-center font-bold cursor-pointer'><LogoutIcon style={{ fontSize: 22 }} />LogOut</span>
+                            <span onClick={() => dispatch(logOff())} className='bg-red-800 w-11/12 text-xs mt-4  h-7 flex items-center justify-center  rounded-md text-center font-bold cursor-pointer'><LogoutIcon style={{ fontSize: 22 }} />LogOut</span>
 
                         </nav>
 

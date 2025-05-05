@@ -3,11 +3,18 @@ import { Routes, Route } from 'react-router-dom'
 import Home from "./pages/Home/Home"
 import SignUp from "./pages/SignUp"
 import SignIn from "./pages/SignIn"
+import { Toaster } from 'react-hot-toast';
+import UseGetUser from "./hooks/UseGetUser"
+
 
 function App() {
 
+  //get user profile
+  UseGetUser()
+
   return (
     <>
+      <Toaster />
       <Header />
       <div className=" mt-10  ">
         <Routes>

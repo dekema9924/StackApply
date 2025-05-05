@@ -2,19 +2,22 @@ import { useState } from "react"
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { Config } from "../config/Config";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 
 interface user {
     username: string
-    email: string
     password: string
 }
 
 const SignIn = () => {
+    const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState('password')
     const [isInput, setInput] = useState<user>({
         username: "",
-        email: "",
         password: ""
     })
 
@@ -31,10 +34,38 @@ const SignIn = () => {
     }
 
     //submit form
-    function HandleSubmit(e: React.FormEvent<HTMLFormElement>): void {
-        e.preventDefault()
-        console.log(isInput)
+    async function HandleSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
+        e.preventDefault();
+
+        try {
+            console.log(Config.apiUrl);
+            const response = await axios.post(`${Config.apiUrl}/signin`, {
+                username: isInput.username,
+                password: isInput.password
+            }, {
+                withCredentials: true
+            });
+
+            if (response.status === 200) {
+                navigate('/');
+                // console.log(response);
+                toast.success(response.data.message);
+            }
+        } catch (error: any) {
+            if (error.response) {
+                console.error('Backend Error:', error.response.data);
+                toast.error(error.response.data.message || 'Login failed');
+            } else if (error.request) {
+                console.error('No response from server');
+                toast.error('No response from server');
+            } else {
+                // Error setting up request
+                console.error('Error:', error.message);
+                toast.error('Unexpected error');
+            }
+        }
     }
+
 
     return (
         <>
@@ -46,7 +77,7 @@ const SignIn = () => {
                 {/* //email */}
                 <div className="flex w-11/12  flex-col">
                     <label className="text-gray-300" htmlFor="email">Email or Username</label>
-                    <input onChange={(e) => HandleInput(e)} className="border-2 w-full h-10 rounded-md pl-4" type="email" placeholder="john@gmail.com" name="email" />
+                    <input onChange={(e) => HandleInput(e)} className="border-2 w-full h-10 rounded-md pl-4" type="text" placeholder="john@gmail.com" name="username" />
                 </div>
 
 

@@ -5,7 +5,9 @@ import About from './About';
 
 
 
+
 function Home() {
+    //get user profile
     return (
         <>
             <main className=' bg-gradient-to-b from-[#1A1A1A] via-[#2f1e5c] to-[#1A1A1A] m-auto '>

@@ -2,6 +2,10 @@ import { useState } from "react"
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { Config } from "../config/Config";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 interface user {
     username: string
@@ -11,6 +15,7 @@ interface user {
 
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState('password')
+    const navigate = useNavigate()
     const [isInput, setInput] = useState<user>({
         username: "",
         email: "",
@@ -30,9 +35,36 @@ const SignUp = () => {
     }
 
     //submit form
-    function HandleSubmit(e: React.FormEvent<HTMLFormElement>): void {
+    async function HandleSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
         e.preventDefault()
-        console.log(isInput)
+        try {
+            console.log(Config.apiUrl);
+            const response = await axios.post(`${Config.apiUrl}/signup`, {
+                username: isInput.username,
+                password: isInput.password,
+                email: isInput.email
+            }, {
+                withCredentials: true
+            });
+
+            if (response.status === 200) {
+                navigate('/signin');
+                console.log(response);
+                toast.success(response.data.message);
+            }
+        } catch (error: any) {
+            if (error.response) {
+                console.error('Backend Error:', error.response.data);
+                toast.error(error.response.data.error || 'Login failed');
+            } else if (error.request) {
+                console.error('No response from server');
+                toast.error('No response from server');
+            } else {
+                // Error setting up request
+                console.error('Error:', error.message);
+                toast.error('Unexpected error');
+            }
+        }
     }
 
     return (

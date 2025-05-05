@@ -5,10 +5,16 @@ const port = 3000
 const app = express()
 require('./config/mongoose')
 var cookieParser = require('cookie-parser')
+var cors = require('cors')
+
 
 
 
 //middlewares
+app.use(cors({
+    origin: process.env.NODE_ENV === 'developement' ? 'http://localhost:5173' : 'https://api.production.com',
+    credentials: true
+}))
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
