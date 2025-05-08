@@ -2,12 +2,18 @@
 import { Search } from '@mui/icons-material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import About from './About';
+import useGetUser from '../../hooks/useGetUser';
+import Jobs from './Jobs';
+import Info from './Info';
+import Accordian from './Accordian'
 
 
 
 
 function Home() {
-    //get user profile
+    useGetUser()
+
+
     return (
         <>
             <main className=' bg-gradient-to-b from-[#1A1A1A] via-[#2f1e5c] to-[#1A1A1A] m-auto '>
@@ -30,6 +36,9 @@ function Home() {
                     </form>
                 </section>
                 <About />
+                <Jobs />
+                <Info />
+                <Accordian />
             </main>
         </>
     )

@@ -3,12 +3,16 @@ import { Config } from "../config/Config";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getUser } from "../features/UserSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../Store/Store";
 
 
-const UseGetUser = () => {
+const useGetUser = () => {
     const dispatch = useDispatch()
+    const user = useSelector((state: RootState) => state.user.value)
 
     useEffect(() => {
+
         axios.get(`${Config.apiUrl}/profile`, { withCredentials: true }).then((response) => {
             console.log(response)
             if (response) {
@@ -23,4 +27,4 @@ const UseGetUser = () => {
     }, [dispatch])
 }
 
-export default UseGetUser
+export default useGetUser

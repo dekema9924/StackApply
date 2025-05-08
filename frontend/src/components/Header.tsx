@@ -13,13 +13,16 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../Store/Store';
-import { UseDispatch } from 'react-redux';
 import { logOff } from '../features/UserSlice';
+import axios from 'axios';
+import { Config } from '../config/Config';
+import toast from 'react-hot-toast';
 
 
 
 
 const Header = () => {
+
     const [isMenu, setMenuClicked] = useState(false)
     const [isProfileClicked, setProfileClicked] = useState(false)
     const [isLgScreenProfile, setLgScreenProfile] = useState(false)
@@ -30,8 +33,8 @@ const Header = () => {
     //hanele Menu clicked
     function HandleMenuClicked() {
         setMenuClicked((prev) => !prev)
-        console.log(isMenu)
         setProfileClicked(false)
+        setLgScreenProfile(false)
     }
 
     //smscreen profile dropdown
@@ -43,8 +46,28 @@ const Header = () => {
     //lg-screen profile dropwdown
     function HandleLgProfileClicked() {
         setLgScreenProfile(!isLgScreenProfile)
+        setProfileClicked(false)
 
     }
+
+    //handle logoff
+    async function HandleLogOff() {
+        try {
+            const response = await axios.get(`${Config.apiUrl}/logoff`, {
+                withCredentials: true
+            });
+
+            if (response.status === 200) {
+                toast.success(response.data.message);
+                dispatch(logOff());
+                navigate('/signin');
+            }
+        } catch (error: any) {
+            toast.error('Logoff failed');
+            console.error(error.response?.data || error.message);
+        }
+    }
+
 
 
     return (
@@ -61,7 +84,7 @@ const Header = () => {
 
                         {/* //lg screen profile */}
                         {
-                            user.isAuth ? <p onClick={HandleLgProfileClicked} className='cursor-pointer '>Profile<ArrowDropDownIcon className={`${isLgScreenProfile ? "rotate-180 " : ""} transition-all duration-500`} /></p> : ""
+                            user.isAuth ? <p onClick={HandleLgProfileClicked} className='cursor-pointer '>Profile<ArrowDropDownIcon className={`${isLgScreenProfile ? "rotate-180 " : ""} transition-all duration-500`} /></p> : <Link className='underline' to={'/signup'}>SignUp</Link>
                         }
 
                         <div className={`${isLgScreenProfile ? " h-76 p-2" : "h-0 p-0 "} absolute rounded-md overflow-hidden bg-[#2c2c2c] ${!user.isAuth ? "hidden" : ""} transition-all duration-500 left-0 top-12 w-full  justify-center flex flex-col gap-4 z-44`}>
@@ -77,7 +100,7 @@ const Header = () => {
                                 <p className=''>My Jobs</p>
                                 <p className='gray-text text-xs '>See your saved jobs here</p>
                             </div>
-                            <span onClick={() => dispatch(logOff())} className='bg-red-800 w-11/12 text-xs mt-4  h-7 flex items-center m-auto justify-center  rounded-md text-center font-bold cursor-pointer'><LogoutIcon style={{ fontSize: 22 }} />LogOut</span>
+                            <span onClick={HandleLogOff} className='bg-red-800 w-11/12 text-xs mt-4  h-7 flex items-center m-auto justify-center  rounded-md text-center font-bold cursor-pointer'><LogoutIcon style={{ fontSize: 22 }} />LogOut</span>
                         </div>
 
 
@@ -86,7 +109,6 @@ const Header = () => {
                     {
                         !user.isAuth ?
                             <div className='flex gap-4 items-center '>
-                                <Link className='underline' to={'/signUp'}>SignUp</Link>
                                 <button onClick={() => navigate('/signin')} className=' w-22 h-10 rounded-md'>Login</button>
                             </div>
 
@@ -94,8 +116,8 @@ const Header = () => {
                     }
 
                     {/* //small screen Profile */}
-                    <div className={`relative md:hidden ${!user.isAuth ? "hidden" : ""}`}>
-                        <span onClick={HandleProfileClicked} className='card border-2 font-bold rounded-full w-10 h-10 text-center flex items-center justify-center cursor-pointer uppercase'>D</span>
+                    <div className={`relative md:hidden ${!user.isAuth ? "h-0 w-0 overflow-hidden" : "block"}`}>
+                        <span onClick={() => HandleProfileClicked()} className='card border-2 font-bold rounded-full w-10 h-10 text-center flex items-center justify-center cursor-pointer uppercase'>D</span>
                         {/* //profile dropdown */}
                         <nav className={` w-60 absolute right-0 top-[45px] rounded-md ${isProfileClicked ? "card h-fit p-4" : "h-0 overflow-hidden p-0"}`}>
                             <div className='my-2 '>
@@ -109,7 +131,7 @@ const Header = () => {
                                 <Link to={'/myjobs'} className='flex gap-2 items-center cursor-pointer h-8 hover:bg-[#4A4A4A] rounded-md '><WorkIcon style={{ fontSize: 22 }} />My Jobs</Link>
                             </div>
                             <hr className='border-gray-500 border-t-1 border-0 my-2' />
-                            <span onClick={() => dispatch(logOff())} className='bg-red-800 w-11/12 text-xs mt-4  h-7 flex items-center justify-center  rounded-md text-center font-bold cursor-pointer'><LogoutIcon style={{ fontSize: 22 }} />LogOut</span>
+                            <span onClick={HandleLogOff} className='bg-red-800 w-11/12 text-xs mt-4  h-7 flex items-center justify-center  rounded-md text-center font-bold cursor-pointer'><LogoutIcon style={{ fontSize: 22 }} />LogOut</span>
 
                         </nav>
 
@@ -123,10 +145,17 @@ const Header = () => {
                             <span className={`border-t-2 block w-8/12 mx-auto transition-all duration-500  ${isMenu ? "-rotate-45 -translate-y-[1.5px]" : ""}`}></span>
                         </div>
                         {/* //dropdown */}
-                        <nav className={`${isMenu ? " h-44 p-4 card  " : "h-0 p-0 overflow-hidden"} absolute w-50 right-4 top-12  flex flex-col gap-2  text-sm rounded-lg `}>
+                        <nav className={`${isMenu ? " h-44 p-4 card  " : "h-0 p-0 overflow-hidden"} absolute w-50 right-4 top-12  justify-center  flex flex-col gap-2  text-sm rounded-lg `}>
                             <Link to={'/'} className=' hover:bg-[#4A4A4A] rounded-md cursor-pointer py-1'><HomeFilledIcon className='mx-2' />Home</Link>
-                            <Link to={'/signin'} className=' hover:bg-[#4A4A4A] rounded-md cursor-pointer py-1'><PersonIcon className='mx-2' />Log In</Link>
-                            <Link to={'/signup'} className=' hover:bg-[#4A4A4A] rounded-md cursor-pointer py-1'> <PersonAddAltIcon className='mx-2' />Signup</Link>
+                            {
+                                !user.isAuth ?
+                                    <div className='flex flex-col gap-1'>
+                                        <Link to={'/signin'} className=' hover:bg-[#4A4A4A] rounded-md cursor-pointer py-1'><PersonIcon className='mx-2' />Log In</Link>
+                                        <Link to={'/signup'} className=' hover:bg-[#4A4A4A] rounded-md cursor-pointer py-1'> <PersonAddAltIcon className='mx-2' />Signup</Link>
+                                    </div>
+
+                                    : ""
+                            }
                             <Link to={'/dashboard'} className=' hover:bg-[#4A4A4A] rounded-md cursor-pointer py-1'> <DashboardIcon className='mx-2' />Dashboard</Link>
 
                         </nav>

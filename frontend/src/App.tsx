@@ -4,26 +4,37 @@ import Home from "./pages/Home/Home"
 import SignUp from "./pages/SignUp"
 import SignIn from "./pages/SignIn"
 import { Toaster } from 'react-hot-toast';
-import UseGetUser from "./hooks/UseGetUser"
+import useGetUser from "./hooks/useGetUser"
+import Footer from "./components/Footer"
+import Alljobs from "./pages/Alljobs"
+import JobDetails from "./pages/JobDetails"
+
+
+
 
 
 function App() {
-
   //get user profile
-  UseGetUser()
+  useGetUser()
+
 
   return (
     <>
       <Toaster />
       <Header />
-      <div className=" mt-10  ">
+      <div className=" md:mt-10 mt-22 w-11/12 m-auto  ">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/jobs" element={<Alljobs />} />
+          <Route path="/jobs/:id" element={<JobDetails />} />
+
 
 
         </Routes>
+        <Footer />
+
       </div>
 
     </>
