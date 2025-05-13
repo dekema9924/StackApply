@@ -8,6 +8,9 @@ import useGetUser from "./hooks/useGetUser"
 import Footer from "./components/Footer"
 import Alljobs from "./pages/Alljobs"
 import JobDetails from "./pages/JobDetails"
+import Profile from "./pages/Profile"
+import Dashboard from "./pages/Dashboard"
+import SavedJobs from "./pages/SavedJobs"
 
 
 
@@ -29,6 +32,9 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/jobs" element={<Alljobs />} />
           <Route path="/jobs/:id" element={<JobDetails />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/myjobs" element={<SavedJobs />} />
 
 
 

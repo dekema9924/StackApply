@@ -5,6 +5,7 @@ const SignUp = require('../controllers/signUp')
 const VerifyToken = require('../middleware/VerifyToken')
 const Profile = require('../controllers/Profile')
 const LogOff = require('../controllers/LogOff')
+const UpdatePassword = require('../controllers/UpdatePass')
 const userRoute = express.Router()
 
 
@@ -17,6 +18,8 @@ userRoute.post('/signin', SignIn)
 userRoute.post('/signup', SignUp)
 userRoute.get('/profile', VerifyToken, Profile)
 userRoute.get('/logoff', VerifyToken, LogOff)
+userRoute.post('/updatepassword', VerifyToken, UpdatePassword)
+
 
 
 

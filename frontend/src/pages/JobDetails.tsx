@@ -1,6 +1,6 @@
 
 
-import { use, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Loading from '../components/Loading'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -9,6 +9,8 @@ import Card from '../components/Card';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Store/Store';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import axios from 'axios';
+import { Config } from '../config/Config';
 
 interface jobdetailsInterface {
     employer_name: string
@@ -25,7 +27,6 @@ interface jobdetailsInterface {
 
 function JobDetails() {
     const user = useSelector((state: RootState) => state.user.value)
-
     const { id } = useParams()
     const [isLoading, setisLoading] = useState(false)
     const [jobDetails, setJobDetails] = useState<jobdetailsInterface>({
@@ -50,13 +51,21 @@ function JobDetails() {
         },
         job_title: "Front-end Developer"
     })
+
+    useEffect(() => {
+        axios.get(`${Config.apiUrl}/api/jobs/${id}`).then((response) => {
+            setJobDetails(response.data.data[0])
+            setisLoading(false)
+        })
+    }, [])
+
     return (
         <>
 
             <Link to={'/jobs'} className='gray-text text-sm cursor-pointer'>
                 <KeyboardArrowLeftIcon />Back To Search
             </Link>
-            <div className=' p-8 md:p-0 mt-22'>
+            <div className=' p-8 md:p-0 md:mt-22'>
 
                 {
                     !isLoading ?
@@ -82,7 +91,7 @@ function JobDetails() {
                             <hr className='mt-5 border-gray-600' />
 
 
-                            <p className='text-sm leading-7 my-6  w-10/12'>{jobDetails.job_description}</p>
+                            <p className='text-sm leading-7 my-6 max-h-96 border-2 rounded-md overflow-x-hidden p-4 border-gray-700  w-10/12'>{jobDetails.job_description}</p>
 
                             {
                                 !user.isAuth ? <Card /> : ""

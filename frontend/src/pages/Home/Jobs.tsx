@@ -1,111 +1,104 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import axios from "axios"
+import { Config } from "../../config/Config"
+import toast from "react-hot-toast"
 
 
 interface jobsInterface {
-    job_Title: string
-    location: string
-    pay: number
+    job_title
+    : string
+    job_location: string
     link: string
-    type: string
+
+    job_employment_type
+    : string
     job_id: string
     job_apply_link: string
+    job_salary: string | null
+
 
 }
 
 
+
 const Jobs = () => {
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const [jobs, setJobs] = useState<jobsInterface[]>([
 
         {
-            job_Title: "Frontend Developer",
-            location: "New York, NY",
-            pay: 95000,
+            job_title
+                : "Frontend Developer",
+
+            job_location: "New York, NY",
             link: "https://company.com/jobs/frontend",
-            type: "Full-time",
-            job_id: "",
-            job_apply_link: ""
-        },
-        {
-            job_Title: "Backend Engineer",
-            location: "San Francisco, CA",
-            pay: 110000,
-            link: "https://company.com/jobs/backend",
-            type: "Full-time",
-            job_id: "",
-            job_apply_link: ""
 
+            job_employment_type
+                : "Full-time",
+            job_id: "",
+            job_apply_link: "",
+            job_salary: ""
 
         },
         {
-            job_Title: "DevOps Engineer",
-            location: "Remote",
-            pay: 105000,
-            link: "https://company.com/jobs/devops",
-            type: "Remote",
-            job_id: "",
-            job_apply_link: ""
+            job_title
+                : "Frontend Developer",
 
+            job_location: "New York, NY",
+            link: "https://company.com/jobs/frontend",
+
+            job_employment_type
+                : "Full-time",
+            job_id: "",
+            job_apply_link: "",
+            job_salary: ""
 
         },
         {
-            job_Title: "Data Analyst",
-            location: "Austin, TX",
-            pay: 85000,
-            link: "https://company.com/jobs/data-analyst",
-            type: "Contract",
-            job_id: "",
-            job_apply_link: ""
+            job_title
+                : "Frontend Developer",
 
+            job_location: "New York, NY",
+            link: "https://company.com/jobs/frontend",
+
+            job_employment_type
+                : "Full-time",
+            job_id: "",
+            job_apply_link: "",
+            job_salary: ""
 
         },
         {
-            job_Title: "Software Tester",
-            location: "Seattle, WA",
-            pay: 78000,
-            link: "https://company.com/jobs/tester",
-            type: "Part-time",
-            job_id: "",
-            job_apply_link: ""
+            job_title
+                : "Frontend Developer",
 
+            job_location: "New York, NY",
+            link: "https://company.com/jobs/frontend",
+
+            job_employment_type
+                : "Full-time",
+            job_id: "",
+            job_apply_link: "",
+            job_salary: ""
 
         },
-        {
-            job_Title: "Mobile App Developer",
-            location: "Denver, CO",
-            pay: 92000,
-            link: "https://company.com/jobs/mobile",
-            type: "Full-time",
-            job_id: "",
-            job_apply_link: ""
 
-
-        },
-        {
-            job_Title: "AI Research Intern",
-            location: "Boston, MA",
-            pay: 30000,
-            link: "https://company.com/jobs/ai-intern",
-            type: "Internship",
-            job_id: "",
-            job_apply_link: ""
-
-
-        },
-        {
-            job_Title: "Cybersecurity Specialist",
-            location: "Washington, DC",
-            pay: 115000,
-            link: "https://company.com/jobs/security",
-            type: "Full-time",
-            job_id: "",
-            job_apply_link: ""
-
-
-        },
 
     ])
+    useEffect(() => {
+        axios.get(`${Config.apiUrl}/api/jobs`)
+            .then((response) => {
+                setJobs(response.data.data || []);
+            })
+            .catch((error) => {
+                console.error("API error:", error);
+                const msg = error.response?.data?.error || "Api Limit reached";
+                toast.error(msg);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    }, [])
     return (
         <>
             <section className="border-2 w-11/12 m-auto h-96 mt-14 border-gray-700 bg-[#1c1c1c] rounded-md   ">
@@ -115,21 +108,26 @@ const Jobs = () => {
                 </div>
                 <hr className="w-11/12 m-auto border-gray-500" />
 
-                <div className="flex items-start flex-wrap gap-6 p-6 mt-5 overflow-hidden overflow-y-scroll justify-center  h-55 ">
+                <div className="flex items-start flex-wrap gap-6 p-6 mt-5 overflow-hidden overflow-y-scroll justify-center   h-55 ">
                     {
                         !isLoading ?
-                            jobs.map((jobsdata) => {
+                            jobs.slice(0, 10).map((jobsdata) => {
+                                console.log({ alljobs: jobs })
                                 return (
-                                    <div className="bg-[#2c2c2c] rounded-lg flex  items-center justify-between p-4 lg:w-4/10 md:w-80 lg:ml-22 w-96  hover:border-1 border-gray-800 hover:border-[#693efe] transitona-all duration-500 cursor-pointer">
-                                        <Link to={`jobs/${jobsdata.job_id}`} className="flex flex-col items-center gap-1">
-                                            <h1 className="font-bold">{jobsdata.job_Title}</h1>
+                                    <div className="bg-[#2c2c2c] rounded-lg flex  items-center justify-between p-4 lg:w-4/10 w-96  hover:border-1 border-gray-800 hover:border-[#693efe] transitona-all duration-500 cursor-pointer">
+                                        <Link to={`jobs/${jobsdata.job_id}`} className="flex flex-col  gap-1">
+                                            <h1 className="font-bold">{jobsdata.job_title
+                                            }</h1>
                                             <div className="flex items-center gap-4">
-                                                <p>{jobsdata.location}</p>
-                                                <p>{jobsdata.type}</p>
+                                                <p>{jobsdata.
+                                                    job_location}</p>
+                                                <p>{jobsdata.
+                                                    job_employment_type
+                                                }</p>
                                             </div>
                                         </Link>
                                         <div>
-                                            <p className="mx-2" >${jobsdata.pay}k</p>
+                                            <p className="mx-2" >${jobsdata.job_salary !== null ? jobsdata.job_salary : ""}k</p>
                                             <a href={jobsdata.job_apply_link} className="bg-[#693efe] px-4 h-6 flex items-center justify-center rounded-md text-sm my-2">Apply</a>
                                         </div>
                                     </div>
@@ -139,7 +137,11 @@ const Jobs = () => {
                     }
                 </div>
 
+
+
             </section>
+
+
         </>
     )
 }

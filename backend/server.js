@@ -6,6 +6,7 @@ const app = express()
 require('./config/mongoose')
 var cookieParser = require('cookie-parser')
 var cors = require('cors')
+const jobsRouter = require('./routes/jobs')
 
 
 
@@ -19,9 +20,7 @@ app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use('/', userRoute)
-
-
-
+app.use('/api', jobsRouter)
 
 
 

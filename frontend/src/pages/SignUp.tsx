@@ -49,13 +49,12 @@ const SignUp = () => {
 
             if (response.status === 200) {
                 navigate('/signin');
-                console.log(response);
                 toast.success(response.data.message);
             }
         } catch (error: any) {
             if (error.response) {
                 console.error('Backend Error:', error.response.data);
-                toast.error(error.response.data.error || 'Login failed');
+                toast.error(error.response.data.message || 'Login failed');
             } else if (error.request) {
                 console.error('No response from server');
                 toast.error('No response from server');
