@@ -11,6 +11,7 @@ import { RootState } from '../Store/Store';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import axios from 'axios';
 import { Config } from '../config/Config';
+import { trackUserAction } from '../api/Track';
 
 interface jobdetailsInterface {
     employer_name: string
@@ -99,7 +100,7 @@ function JobDetails() {
 
                             {/* //Bookmark job */}
                             <div className='flex items-center gap-4  my-6'>
-                                <button className='text-sm w-44 h-9 rounded-md'>Apply Now <ArrowForwardIcon /></button>
+                                <button onClick={() => trackUserAction('apply')} className='text-sm w-44 h-9 rounded-md'>Apply Now <ArrowForwardIcon /></button>
                                 <p onClick={() => HandlesaveJobs()} className='border-1 p-2 cursor-pointer border-gray-600 rounded-md'><BookmarkIcon style={{ fontSize: 33 }} className='text-center' /></p>
                             </div>
                             <hr className='mt-5 border-gray-600' />

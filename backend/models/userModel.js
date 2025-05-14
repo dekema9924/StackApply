@@ -11,7 +11,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
-    password: String
+    password: String,
+    jobsViewed: Number,
+    jobsSaved: Number,
+    jobsApplied: Number
 
 }, { timestamps: true })
 

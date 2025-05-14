@@ -1,10 +1,11 @@
-import { useState, useEffect, FormHTMLAttributes } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Loading from "../components/Loading";
 import axios from "axios";
 import { Config } from "../config/Config";
 import toast from "react-hot-toast";
 import { Search } from '@mui/icons-material';
+import { trackUserAction } from "../api/Track";
 
 
 interface JobData {
@@ -18,7 +19,6 @@ interface JobData {
 }
 
 const jobsPerPage = 8;
-
 function Alljobs() {
     const [isLoading, setIsLoading] = useState(false);
     const [jobsData, setJobsData] = useState<JobData[]>([
@@ -124,7 +124,7 @@ function Alljobs() {
                 </div>
             </form>
             {currentJobs.map((job, indx) => (
-                <Link
+                <Link onClick={() => trackUserAction('view')}
                     key={indx}
                     to={`/jobs/${job.job_id}`}
                     className="block rounded border border-gray-700 p-4 hover:shadow-lg transition"

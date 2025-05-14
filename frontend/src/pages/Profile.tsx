@@ -31,28 +31,30 @@ const Profile = () => {
 
         if (isInput.new_password !== isInput.confirm_new_password) {
             toast.error('passwords do not match')
-        }
-        axios.post(`${Config.apiUrl}/updatepassword`, {
-            current_password: isInput.current_password,
-            new_password: isInput.new_password
-        }, {
-            withCredentials: true
-        })
-            .then((response) => {
-                console.log(response);
-                if (response.status === 200) {
-                    toast.success(response.data.message);
-                    setShowBox(false);
-                }
+        } else {
+            axios.post(`${Config.apiUrl}/updatepassword`, {
+                current_password: isInput.current_password,
+                new_password: isInput.new_password
+            }, {
+                withCredentials: true
             })
-            .catch((error) => {
-                console.error(error);
-                if (error.response && error.response.data && error.response.data.message) {
-                    toast.error(error.response.data.message);
-                } else {
-                    toast.error("An unexpected error occurred.");
-                }
-            });
+                .then((response) => {
+                    console.log(response);
+                    if (response.status === 200) {
+                        toast.success(response.data.message);
+                        setShowBox(false);
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                    if (error.response && error.response.data && error.response.data.message) {
+                        toast.error(error.response.data.message);
+                    } else {
+                        toast.error("An unexpected error occurred.");
+                    }
+                });
+        }
+
 
 
     }

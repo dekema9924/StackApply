@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 import { Config } from "../../config/Config"
 import toast from "react-hot-toast"
+import { trackUserAction } from "../../api/Track"
 
 
 interface jobsInterface {
@@ -115,7 +116,7 @@ const Jobs = () => {
                                 console.log({ alljobs: jobs })
                                 return (
                                     <div className="bg-[#2c2c2c] rounded-lg flex  items-center justify-between p-4 lg:w-4/10 w-96  hover:border-1 border-gray-800 hover:border-[#693efe] transitona-all duration-500 cursor-pointer">
-                                        <Link to={`jobs/${jobsdata.job_id}`} className="flex flex-col  gap-1">
+                                        <Link onClick={() => trackUserAction('view')} to={`jobs/${jobsdata.job_id}`} className="flex flex-col  gap-1">
                                             <h1 className="font-bold">{jobsdata.job_title
                                             }</h1>
                                             <div className="flex items-center gap-4">
@@ -128,7 +129,7 @@ const Jobs = () => {
                                         </Link>
                                         <div>
                                             <p className="mx-2" >${jobsdata.job_salary !== null ? jobsdata.job_salary : ""}k</p>
-                                            <a href={jobsdata.job_apply_link} className="bg-[#693efe] px-4 h-6 flex items-center justify-center rounded-md text-sm my-2">Apply</a>
+                                            <a onClick={() => trackUserAction('apply')} href={jobsdata.job_apply_link} className="bg-[#693efe] px-4 h-6 flex items-center justify-center rounded-md text-sm my-2">Apply</a>
                                         </div>
                                     </div>
                                 )
