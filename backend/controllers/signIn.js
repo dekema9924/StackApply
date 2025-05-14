@@ -25,7 +25,7 @@ const SignIn = async (req, res) => {
                 httpOnly: process.env.NODE_ENV === 'development' ? false : true,
                 secure: process.env.NODE_ENV === 'development' ? false : true,
                 sameSite: process.env.NODE_ENV === 'development' ? 'Lax' : 'Strict',
-                maxAge: 24 * 60 * 60 * 1000 // 1 day
+                maxAge: 30 * 1000 // 1 day
             })
             return res.status(200).json({
                 message: 'Login success',

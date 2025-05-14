@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormHTMLAttributes } from "react";
 import { Link } from "react-router-dom";
 import Loading from "../components/Loading";
 import axios from "axios";
 import { Config } from "../config/Config";
 import toast from "react-hot-toast";
+import { Search } from '@mui/icons-material';
+
 
 interface JobData {
     job_title: string;
@@ -59,6 +61,7 @@ function Alljobs() {
 
     ]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [SearchInput, setSearchInput] = useState("")
 
     useEffect(() => {
         // setIsLoading(true);
@@ -75,6 +78,28 @@ function Alljobs() {
             });
     }, []);
 
+    //handle search input
+    function HandleInput(e: React.ChangeEvent<HTMLInputElement>) {
+        setSearchInput(e.target.value)
+    }
+
+    //search Jon
+    function HandleSearchJob(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault()
+        console.log(SearchInput)
+        axios
+            .post(`${Config.apiUrl}/api/search`, { query: SearchInput })
+            .then((response) => {
+                setJobsData(response.data.data || []);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                const msg = error.response?.data?.error || "Api Limit reached";
+                toast.error(msg);
+                setIsLoading(false);
+            });
+    }
+
     const totalPages = Math.ceil(jobsData.length / jobsPerPage);
     const indexOfLastJob = currentPage * jobsPerPage;
     const indexOfFirstJob = indexOfLastJob - jobsPerPage;
@@ -90,6 +115,14 @@ function Alljobs() {
 
     return (
         <div className="flex flex-col gap-4 p-4">
+
+            <form onSubmit={(e) => HandleSearchJob(e)} className='md:w-5/12 m-auto md:my-10 -z-1 ' action="">
+                <div className='border-2 h-13 rounded-2xl relative flex items-center px-1 w-11/12 m-auto '>
+                    <input onChange={(e) => HandleInput(e)} name="query" className='pl-14 outline-none  w-full ' type="text" placeholder='Job title' />
+                    <Search className='absolute left-4' />
+                    <button className='w-55 h-8/12 rounded-2xl font-bold '>Search</button>
+                </div>
+            </form>
             {currentJobs.map((job, indx) => (
                 <Link
                     key={indx}

@@ -6,6 +6,7 @@ const jobDetails = require('../controllers/Jobs/jobDetails')
 const SavedJobs = require('../controllers/Jobs/SaveJobs')
 const VerifyToken = require('../middleware/VerifyToken')
 const getMyJobs = require('../controllers/Jobs/getMyJobs')
+const SearchJobs = require('../controllers/Jobs/Search')
 const jobsRouter = express.Router()
 
 
@@ -17,6 +18,8 @@ jobsRouter.get('/jobs', getJobs)
 jobsRouter.get('/jobs/:id', jobDetails)
 jobsRouter.post('/myjobs', VerifyToken, SavedJobs)
 jobsRouter.get('/myjobs', VerifyToken, getMyJobs)
+jobsRouter.post('/search', SearchJobs)
+
 
 
 
