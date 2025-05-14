@@ -59,6 +59,20 @@ function JobDetails() {
         })
     }, [])
 
+
+    //save job
+    function HandlesaveJobs() {
+        axios.post(`${Config.apiUrl}/api/myjobs`, {
+            job_id: id
+        }, { withCredentials: true })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
     return (
         <>
 
@@ -86,7 +100,7 @@ function JobDetails() {
                             {/* //Bookmark job */}
                             <div className='flex items-center gap-4  my-6'>
                                 <button className='text-sm w-44 h-9 rounded-md'>Apply Now <ArrowForwardIcon /></button>
-                                <p className='border-1 p-2 cursor-pointer border-gray-600 rounded-md'><BookmarkIcon style={{ fontSize: 33 }} className='text-center' /></p>
+                                <p onClick={() => HandlesaveJobs()} className='border-1 p-2 cursor-pointer border-gray-600 rounded-md'><BookmarkIcon style={{ fontSize: 33 }} className='text-center' /></p>
                             </div>
                             <hr className='mt-5 border-gray-600' />
 

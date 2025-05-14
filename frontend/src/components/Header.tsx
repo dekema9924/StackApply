@@ -117,7 +117,7 @@ const Header = () => {
 
                     {/* //small screen Profile */}
                     <div className={`relative md:hidden ${!user.isAuth ? "h-0 w-0 overflow-hidden" : "block"}`}>
-                        <span onClick={() => HandleProfileClicked()} className='card border-2 font-bold rounded-full w-10 h-10 text-center flex items-center justify-center cursor-pointer uppercase'>D</span>
+                        <span onClick={() => HandleProfileClicked()} className='card border-2 font-bold rounded-full w-10 h-10 text-center flex items-center justify-center cursor-pointer uppercase'>{user.username.slice(0, 1)}</span>
                         {/* //profile dropdown */}
                         <nav className={` w-60 absolute right-0 top-[45px] rounded-md ${isProfileClicked ? "card h-fit p-4" : "h-0 overflow-hidden p-0"}`}>
                             <div className='my-2 '>
