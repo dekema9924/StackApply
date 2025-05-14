@@ -11,7 +11,7 @@ import JobDetails from "./pages/JobDetails"
 import Profile from "./pages/Profile"
 import Dashboard from "./pages/Dashboard"
 import SavedJobs from "./pages/SavedJobs"
-
+import PrivateRoutes from "./routes/AuthRoutes"
 
 
 
@@ -32,11 +32,13 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/jobs" element={<Alljobs />} />
           <Route path="/jobs/:id" element={<JobDetails />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/myjobs" element={<SavedJobs />} />
 
-
+          {/* //private routes */}
+          <Route element={<PrivateRoutes />}>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/myjobs" element={<SavedJobs />} />
+          </Route>
 
         </Routes>
         <Footer />
