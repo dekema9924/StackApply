@@ -14,7 +14,6 @@ import PrivateRoutes from "./routes/AuthRoutes"
 import useGetUser from "./hooks/useGetUser"
 
 
-
 function App() {
   //get user profile
   useGetUser()

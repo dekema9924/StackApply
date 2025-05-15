@@ -13,7 +13,7 @@ const jobsRouter = require('./routes/jobs')
 
 //middlewares
 app.use(cors({
-    origin: process.env.NODE_ENV === 'developement' ? 'http://localhost:5173' : 'https://api.production.com',
+    origin: process.env.NODE_ENV === 'developement' ? 'http://localhost:5173' : 'https://stackapply.netlify.app',
     credentials: true
 }))
 app.use(cookieParser())

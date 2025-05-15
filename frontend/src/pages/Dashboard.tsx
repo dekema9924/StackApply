@@ -14,7 +14,6 @@ import useGetUser from '../hooks/useGetUser';
 
 
 
-
 function Dashboard() {
     const user = useSelector((state: RootState) => state.user.value)
     //getUSer details 

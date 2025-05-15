@@ -6,14 +6,13 @@ import Jobs from './Jobs';
 import Info from './Info';
 import Accordian from './Accordian'
 import { Link } from 'react-router-dom';
-import useGetUser from '../../hooks/useGetUser';
-
+import useGetUser from '../../hooks/useGetUser'
 
 
 
 function Home() {
-    useGetUser()
 
+    useGetUser()
 
 
     return (
