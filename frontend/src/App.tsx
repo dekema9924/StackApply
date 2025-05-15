@@ -11,7 +11,7 @@ import Profile from "./pages/Profile"
 import Dashboard from "./pages/Dashboard"
 import SavedJobs from "./pages/SavedJobs"
 import PrivateRoutes from "./routes/AuthRoutes"
-import useGetUser from "./hooks/useGetUser"
+import useGetUser from "./hooks/useGetUser.tsx"
 
 
 
