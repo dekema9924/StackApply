@@ -2,14 +2,14 @@ const Userdb = require('../../models/userModel');
 
 const trackAction = async (req, res) => {
     const userId = req.user.id;
-    const { action } = req.params; // 'view', 'save', or 'apply'
+    const { action } = req.params; // 'view',  or 'apply'
 
     // Map the action param to the correct field
     const actionMap = {
         view: 'jobsViewed',
-        save: 'jobsSaved',
         apply: 'jobsApplied',
     };
+
 
     const field = actionMap[action];
 

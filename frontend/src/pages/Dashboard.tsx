@@ -52,7 +52,7 @@ function Dashboard() {
                     {/* //total jobs */}
                     <div className='md:w-55 w-11/12 rounded-lg border h-55 flex items-center justify-center gap-6'>
                         <div>
-                            <p className='text-[3em]'>{data.user.jobsViewed} </p>
+                            <p className='text-[3em]'>{data.user.jobsViewed | 0} </p>
                             <p className='text-wrap'>Total jobs <br /> Viwed</p>
                         </div>
 
@@ -63,7 +63,7 @@ function Dashboard() {
                     {/* //total Applications */}
                     <div className='md:w-55 w-11/12  rounded-lg border h-55 flex items-center justify-center'>
                         <div>
-                            <p className='text-[3em]'>{data.user.jobsApplied}  </p>
+                            <p className='text-[3em]'>{data.user.jobsApplied | 0}  </p>
                             <p className='text-wrap'>Total <br />Applications</p>
                         </div>
 

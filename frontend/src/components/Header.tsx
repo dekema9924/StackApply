@@ -5,7 +5,7 @@ import HomeFilledIcon from '@mui/icons-material/HomeFilled';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import PersonIcon from '@mui/icons-material/Person';
 import Person2Icon from '@mui/icons-material/Person2';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+// import NotificationsIcon from '@mui/icons-material/Notifications';
 import WorkIcon from '@mui/icons-material/Work';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -92,10 +92,10 @@ const Header = () => {
                                 <p className=''>Profile</p>
                                 <p className='gray-text text-xs '>View <span>{user.username}</span>s profile</p>
                             </div>
-                            <div onClick={() => navigate('/notifications')} className='hover:bg-[#4A4A4A] rounded-md p-2 cursor-pointer'>
+                            {/* <div onClick={() => navigate('/notifications')} className='hover:bg-[#4A4A4A] rounded-md p-2 cursor-pointer'>
                                 <p className=''>Notifications</p>
                                 <p className='gray-text text-xs '>See your Notifications</p>
-                            </div>
+                            </div> */}
                             <div onClick={() => navigate('/myjobs')} className='hover:bg-[#4A4A4A] rounded-md p-2 cursor-pointer'>
                                 <p className=''>My Jobs</p>
                                 <p className='gray-text text-xs '>See your saved jobs here</p>
@@ -127,7 +127,7 @@ const Header = () => {
                             <hr className='border-gray-500 border-t-1 border-0 my-2' />
                             <div className='text-sm'>
                                 <Link to={'/profile'} className='flex gap-2 items-center cursor-pointer h-8 hover:bg-[#4A4A4A] rounded-md'><Person2Icon style={{ fontSize: 22 }} />Profile</Link>
-                                <Link to={'/notifications'} className='flex gap-2 items-center cursor-pointer h-8 hover:bg-[#4A4A4A] rounded-md '><NotificationsIcon style={{ fontSize: 22 }} />Notifications</Link>
+                                {/* <Link to={'/notifications'} className='flex gap-2 items-center cursor-pointer h-8 hover:bg-[#4A4A4A] rounded-md '><NotificationsIcon style={{ fontSize: 22 }} />Notifications</Link> */}
                                 <Link to={'/myjobs'} className='flex gap-2 items-center cursor-pointer h-8 hover:bg-[#4A4A4A] rounded-md '><WorkIcon style={{ fontSize: 22 }} />My Jobs</Link>
                             </div>
                             <hr className='border-gray-500 border-t-1 border-0 my-2' />
@@ -156,7 +156,7 @@ const Header = () => {
 
                                     : ""
                             }
-                            <Link to={'/dashboard'} className=' hover:bg-[#4A4A4A] rounded-md cursor-pointer py-1'> <DashboardIcon className='mx-2' />Dashboard</Link>
+                            {user.isAuth ? <Link to={'/dashboard'} className=' hover:bg-[#4A4A4A] rounded-md cursor-pointer py-1'> <DashboardIcon className='mx-2' />Dashboard</Link> : ""}
 
                         </nav>
                     </div>

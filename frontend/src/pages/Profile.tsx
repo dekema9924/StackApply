@@ -62,7 +62,7 @@ const Profile = () => {
     return (
         <>
 
-            <div className={`flex md:flex-row flex-col gap-4 md:items-center justify-between  ${showBox ? 'opacity-15 pointer-events-none' : ''}`}>
+            <div className={`flex md:flex-row flex-col gap-4 md:items-center justify-between py-10  ${showBox ? 'opacity-15 pointer-events-none' : ''}`}>
                 <div className="flex items-center gap-4">
                     <span className="card border-2 w-16 flex uppercase items-center justify-center font-bold h-16 rounded-full text-2xl">{user.username.slice(0, 1)}</span>
                     <div>
@@ -80,7 +80,7 @@ const Profile = () => {
             </div>
             {
                 showBox && (
-                    <form onSubmit={(e) => HandleForm(e)} className='card w-96 h-96 rounded-md p-4 m-auto '>
+                    <form onSubmit={(e) => HandleForm(e)} className='card w-96 h-96 rounded-md p-4 m-auto  '>
                         <div className='flex items-center justify-between'>
                             <h1 className='text-2xl font-bold my-4'>Chanage Password</h1>
                             <p onClick={() => setShowBox(false)} className='text-xl cursor-pointer'>🆇</p>
