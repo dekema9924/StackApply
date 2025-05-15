@@ -4,7 +4,6 @@ import Home from "./pages/Home/Home"
 import SignUp from "./pages/SignUp"
 import SignIn from "./pages/SignIn"
 import { Toaster } from 'react-hot-toast';
-import useGetUser from "./hooks/useGetUser"
 import Footer from "./components/Footer"
 import Alljobs from "./pages/Alljobs"
 import JobDetails from "./pages/JobDetails"
@@ -12,7 +11,7 @@ import Profile from "./pages/Profile"
 import Dashboard from "./pages/Dashboard"
 import SavedJobs from "./pages/SavedJobs"
 import PrivateRoutes from "./routes/AuthRoutes"
-
+import useGetUser from "./hooks/useGetUser"
 
 
 
