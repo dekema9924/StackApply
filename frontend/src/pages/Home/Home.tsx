@@ -2,7 +2,7 @@
 // import { Search } from '@mui/icons-material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import About from './About';
-import useGetUser from '../../hooks/useGetUser';
+import usegetUser from '../../hooks/useGetUser'
 import Jobs from './Jobs';
 import Info from './Info';
 import Accordian from './Accordian'
@@ -12,7 +12,8 @@ import { Link } from 'react-router-dom';
 
 
 function Home() {
-    useGetUser()
+    usegetUser()
+
 
 
     return (

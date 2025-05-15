@@ -6,7 +6,7 @@ import ApprovalIcon from '@mui/icons-material/Approval';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import { useSelector } from "react-redux";
 import { RootState } from "../Store/Store";
-import useGetUser from '../hooks/useGetUser';
+import usegetUser from '../hooks/usegetUser';
 import Loading from '../components/Loading';
 import axios from 'axios';
 import { Config } from '../config/Config';
@@ -18,7 +18,7 @@ import { useEffect, useState } from 'react';
 function Dashboard() {
     const user = useSelector((state: RootState) => state.user.value)
     //getUSer details 
-    const { data, loading } = useGetUser()
+    const { data, loading } = usegetUser()
     const [savedjobsNum, setSavedJobsNum] = useState<number>(0)
 
     useEffect(() => {
