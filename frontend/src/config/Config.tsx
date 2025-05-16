@@ -1,10 +1,4 @@
 
-if (import.meta.env.MODE === 'production') {
-    console.log({ prod: import.meta.env.VITE_PROD_API_URL })
-} else {
-    console.log({ prod: import.meta.env.VITE_DEV_API_URL })
-
-}
 
 
 export const Config = {
