@@ -15,8 +15,11 @@ import useGetUser from "./hooks/useGetUser"
 
 
 function App() {
+  console.log("ENV VARS:", import.meta.env);
+
   //get user profile
   useGetUser()
+
 
 
   return (
