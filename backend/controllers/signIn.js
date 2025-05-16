@@ -22,9 +22,9 @@ const SignIn = async (req, res) => {
             let token = CreateToken(UserExist)
             //pass token in cookies
             res.cookie('token', token, {
-                httpOnly: process.env.NODE_ENV === 'development' ? false : true,
-                secure: process.env.NODE_ENV === 'development' ? false : true,
-                sameSite: process.env.NODE_ENV === 'development' ? 'Lax' : 'Strict',
+                httpOnly: process.env.NODE_ENV == 'development' ? false : true,
+                secure: process.env.NODE_ENV == 'development' ? false : true,
+                sameSite: process.env.NODE_ENV == 'production' ? "None" : 'Lax',
                 maxAge: 24 * 60 * 60 * 1000 // 1 day
             })
             return res.status(200).json({
