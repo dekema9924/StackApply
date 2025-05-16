@@ -1,6 +1,9 @@
 
 if (import.meta.env.MODE === 'production') {
     console.log({ prod: import.meta.env.VITE_PROD_API_URL })
+} else {
+    console.log({ prod: import.meta.env.VITE_DEV_API_URL })
+
 }
 
 export const Config = {
@@ -12,3 +15,4 @@ export const Config = {
 console.log("MODE:", import.meta.env.MODE);
 console.log("DEV:", import.meta.env.DEV);
 console.log("PROD API URL:", import.meta.env.VITE_PROD_API_URL);
+console.log({ url: Config.apiUrl })
