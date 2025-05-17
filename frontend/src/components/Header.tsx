@@ -77,7 +77,7 @@ const Header = () => {
                     <LayersIcon style={{ fontSize: 40 }} />
                     <h1 className='font-bold md:text-2xl'>StackApply <span className='text-sm w-14 pl-2 rounded-2xl bg-[#693efe] block md:inline-block'>STEM</span></h1>
                 </div>
-                <nav className="flex items-center md:mr-10 gap-4 mr-3 relative">
+                <nav className="flex items-center z-50 md:mr-10 gap-4 mr-3  relative">
                     <div className='md:flex hidden items-center  gap-4'>
                         <Link to={'/'} className='cursor-pointer'>Home</Link>
                         {user.isAuth ? <p className='cursor-pointer' onClick={() => navigate('/dashboard')}>Dashboard</p> : ""}
@@ -87,7 +87,7 @@ const Header = () => {
                             user.isAuth ? <p onClick={HandleLgProfileClicked} className='cursor-pointer '>Profile<ArrowDropDownIcon className={`${isLgScreenProfile ? "rotate-180 " : ""} transition-all duration-500`} /></p> : <Link className='underline' to={'/signup'}>SignUp</Link>
                         }
 
-                        <div className={`${isLgScreenProfile ? " h-76 p-2" : "h-0 p-0 "} absolute rounded-md overflow-hidden bg-[#2c2c2c] ${!user.isAuth ? "hidden" : ""} transition-all duration-500 left-0 top-12 w-full  justify-center flex flex-col gap-4 z-44`}>
+                        <div className={`${isLgScreenProfile ? " h-76 py-4 h-fit p-2" : "h-0 p-0 "} absolute rounded-md overflow-hidden bg-[#2c2c2c] ${!user.isAuth ? "hidden" : ""} transition-all duration-500 left-0 top-12 w-full  justify-center flex flex-col gap-4 z-44`}>
                             <div onClick={() => navigate('/profile')} className='hover:bg-[#4A4A4A] rounded-md p-2 cursor-pointer'>
                                 <p className=''>Profile</p>
                                 <p className='gray-text text-xs '>View <span>{user.username}</span>s profile</p>
@@ -116,7 +116,7 @@ const Header = () => {
                     }
 
                     {/* //small screen Profile */}
-                    <div className={`relative md:hidden ${!user.isAuth ? "h-0 w-0 overflow-hidden" : "block"}`}>
+                    <div className={`relative md:hidden z-50 ${!user.isAuth ? "h-0 w-0 overflow-hidden" : "block"}`}>
                         <span onClick={() => HandleProfileClicked()} className='card border-2 font-bold rounded-full w-10 h-10 text-center flex items-center justify-center cursor-pointer uppercase'>{user.username.slice(0, 1)}</span>
                         {/* //profile dropdown */}
                         <nav className={` w-60 absolute right-0 top-[45px] rounded-md ${isProfileClicked ? "card h-fit p-4" : "h-0 overflow-hidden p-0"}`}>

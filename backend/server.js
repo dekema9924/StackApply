@@ -12,10 +12,18 @@ const jobsRouter = require('./routes/jobs')
 
 
 //middlewares
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://stackapply.netlify.app"
+];
+
 app.use(cors({
-    origin: process.env.NODE_ENV === 'development'
-        ? 'http://localhost:5173'
-        : 'https://stackapply.netlify.app',
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+        return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true
 }));
 

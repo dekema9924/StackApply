@@ -72,7 +72,7 @@ function Alljobs() {
                 setIsLoading(false);
             })
             .catch((error) => {
-                const msg = error.response?.data?.error || "Api Limit reached";
+                const msg = error.response?.data?.message || "Api Limit reached";
                 toast.error(msg);
                 setIsLoading(false);
             });
@@ -114,11 +114,11 @@ function Alljobs() {
     }
 
     return (
-        <div className="flex flex-col gap-4 p-4">
+        <div className="flex flex-col gap-4 p-4 ">
 
-            <form onSubmit={(e) => HandleSearchJob(e)} className='md:w-5/12 m-auto md:my-10 -z-1 ' action="">
-                <div className='border-2 h-13 rounded-2xl relative flex items-center px-1 w-11/12 m-auto '>
-                    <input onChange={(e) => HandleInput(e)} name="query" className='pl-14 outline-none  w-full ' type="text" placeholder='Job title' />
+            <form onSubmit={(e) => HandleSearchJob(e)} className='md:w-5/12 m-auto md:my-10 z-13  ' action="">
+                <div className='border-1 border-gray-400 h-13 rounded-2xl relative flex items-center px-1 w-full m-auto '>
+                    <input onChange={(e) => HandleInput(e)} name="query" className='pl-14 outline-none w-full ' type="text" placeholder='Job title' />
                     <Search className='absolute left-4' />
                     <button className='w-55 h-8/12 rounded-2xl font-bold '>Search</button>
                 </div>

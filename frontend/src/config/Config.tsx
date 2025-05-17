@@ -10,3 +10,7 @@ export const Config = {
 console.log({ url: Config.apiUrl })
 
 
+console.log({ prod: import.meta.env.MODE })
+console.log({ url: Config.apiUrl })
+
+

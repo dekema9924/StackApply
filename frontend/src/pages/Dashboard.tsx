@@ -33,7 +33,7 @@ function Dashboard() {
             });
     }, []);
 
-    if (loading) return <p>Loading user dashboard...</p>;
+    if (loading) return <Loading />
 
     if (!user.isAuth) return <Loading />
 
